@@ -132,43 +132,21 @@ def get_all_products():
 
 @app.route('/product', methods=['POST'])
 def add_product():
+    shelters = mongo.db.shelters
     products = mongo.db.products
-    name = request.json['name']
-    pid = products.find_one({'name': name})
+    sid = request.json['sid']
+    pid = request.json['pid']
+    count = request.json['count']
+    shelters.update_one({
+        '_id': sid
+        }, {
+            '$inc': {
+                str(pid): count
+            }
+        }, upsert=False)
+    return jsonify({'result': 'SUCCESS'})
+
+
 ###################EXAMPLE CODE BELOW############################
-@app.route('/endpoint', methods=['GET'])
-def get_all_frameworks():
-    framework = mongo.db.framework
-    output = []
-    for q in framework.find():
-        output.append({'name': q['name'], 'language': q['language']})
-    return jsonify({'result': output})
-
-@app.route('/framework/<name>', methods=['GET'])
-def get_one_framework(name):
-    framework = mongo.db.framework
-
-    q = framework.find_one({'name': name}) # one result
-
-    if q:
-        output = {'name': q['name'], 'language': q['language']}
-    else:
-        output = 'No Result Found'
-
-    return jsonify({'result': output})
-
-
-@app.route('/endpoint', methods=['POST'])
-def add_framework():
-    framework = mongo.db.framework
-    name = request.json['name']
-    language = request.json['language']
-
-    framework_id = framework.insert({'name': name, 'language': language})
-    new_framework = framework.find_one({'_id' : framework_id})
-    output = {'name': new_framework['name'], 'language': new_framework['language']}
-    return jsonify({'result': output})
-
-
 if __name__ == '__main__':
     app.run(debug=True)
