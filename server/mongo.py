@@ -8,8 +8,41 @@ app.config['MONGO_URI'] = '<in the mlab>'
 
 mongo = PyMongo(app)
 
-# donator side
+###### DATA MODEL
+# User
+# {
+#     _id : user id,
+#     email: user email,
+#     name: username,
+#     shelter:
+#         {
+#             sid: shelter id,
+#             name: shelter name
+#         }
+# }
+#
+# Product
+# {
+#   _id: product id (auto-populated),
+#   name: product name,
+#   amz_link: amazon link,
+#   cost: cost of product
+# }
+#
+# Shelter
+# {
+#   _id: shelter id (auto-populated),
+#   name: shelter name,
+#   lat: latitude,
+#   lon: longitude,
+#   address: address,
+#   products: [
+#               { pid (product id): count },
+#               ...
+#             ]
+# }
 
+# donator side
 
 
 
@@ -75,7 +108,7 @@ def get_user_shelter(uid):
 #           ...
 #       ]
 # }
-@app.route('/products')
+@app.route('/products', methods=['GET'])
 def get_all_products():
     products = mongo.db.products
     output = []
@@ -83,6 +116,11 @@ def get_all_products():
         output.append({'pid': p['_id'], 'name': p['name']})
     return jsonify({'result': output})
 
+@app.route('/product', methods=['POST'])
+def add_product():
+    products = mongo.db.products
+    name = request.json['name']
+    pid = products.find_one({'name': name})
 ###################EXAMPLE CODE BELOW############################
 @app.route('/endpoint', methods=['GET'])
 def get_all_frameworks():
