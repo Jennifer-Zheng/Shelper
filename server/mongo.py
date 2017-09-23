@@ -13,12 +13,9 @@ mongo = PyMongo(app)
 # {
 #     _id : user id,
 #     email: user email,
-#     name: username,
-#     shelter:
-#         {
-#             sid: shelter id,
-#             name: shelter name
-#         }
+#     name: user's name,
+#     pwd: password,
+#     sid: shelter id
 # }
 #
 # Product
@@ -71,7 +68,7 @@ def sign_up():
     _id = request.json['uid']
     email = request.json['email']
     # if the user id already exists
-    if users.find_one({'_id': _id}) or user.find_one({'email': email}):
+    if users.find_one({'_id': _id}) or users.find_one({'email': email}):
         return jsonify({'result': 'SIGN UP FAILED'})
     name = request.json['name']
     pwd = request.json['pwd']
