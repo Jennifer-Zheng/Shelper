@@ -40,8 +40,25 @@ mongo = PyMongo(app)
 # }
 
 # donator side
-
-
+# GET: /shelters
+# output:
+# {
+#   'result':
+#       [
+#           { sid: shelter id, name: shelter name, lat: latitude,
+#            lon: longitude, address: shelter address, products:
+#            products in shelter },
+#            ...
+#       ]
+# }
+@app.route('/shelters', methods=['GET'])
+def get_all_shelters():
+    shelters = mongo.db.shelters
+    output = []
+    for s in shelters.find():
+        output.append({'sid': s['_id'], 'name': s['name'], 'latitude': s['lat'],
+        'longitude': s['lon'], 'address': s['address'], 'products': s['products']})
+    return jsonify({'result': output})
 
 
 
