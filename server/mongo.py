@@ -56,7 +56,7 @@ def get_all_shelters():
     shelters = mongo.db.shelters
     output = []
     for s in shelters.find():
-        output.append({'sid': s['_id'], 'name': s['name'], 'latitude': s['lat'],
+        output.append({'sid': str(s['_id']), 'name': s['name'], 'latitude': s['lat'],
         'longitude': s['lon'], 'address': s['address'], 'products': s['products']})
     return jsonify({'result': output})
 
@@ -90,7 +90,7 @@ def sign_up():
     name = request.json['name']
     pwd = request.json['pwd']
     sid = mongo.db.shelter.find_one({'name': request.json['shelter_name']})
-    framework.insert({'_id': _id, 'email': email, 'name': name, 'pwd': pwd, 'sid': sid})
+    users.insert({'_id': _id, 'email': email, 'name': name, 'pwd': pwd, 'sid': sid})
     return jsonify({'result': 'SIGN UP SUCCESS'})
 
 # GET: /<name>/userinfo
@@ -127,7 +127,7 @@ def get_all_products():
     products = mongo.db.products
     output = []
     for p in products.find():
-        output.append({'pid': p['_id'], 'name': p['name']})
+        output.append({'pid': str(p['_id']), 'name': p['name']})
     return jsonify({'result': output})
 
 @app.route('/product', methods=['POST'])
