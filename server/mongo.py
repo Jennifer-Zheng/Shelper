@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask.ext.pymongo import PyMongo
+from bson import ObjectId
 
 app = Flask(__name__)
 
@@ -137,13 +138,22 @@ def add_product():
     sid = request.json['sid']
     pid = request.json['pid']
     count = request.json['count']
-    shelters.update_one({
-        '_id': sid
-        }, {
-            '$inc': {
-                str(pid): count
-            }
-        }, upsert=False)
+    shelter = shelters.find_one({'_id': ObjectId(sid)})
+    if not shelter:
+        return jsonify({'result': 'FAILED'})
+    prod = None
+    for p in shelter['products']:
+        if p['pid'] == pid:
+            prod = p
+            break
+    if prod:
+        prod['count'] = prod['count'] + count
+    else:
+        prod = dict()
+        prod['pid'] = pid
+        prod['count'] = count
+        shelter['products'].append(prod)
+    shelters.save(shelter)
     return jsonify({'result': 'SUCCESS'})
 
 
