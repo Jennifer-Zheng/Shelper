@@ -5,7 +5,7 @@ from bson import ObjectId
 app = Flask(__name__)
 
 app.config['MONGO_DBNAME'] = 'hackrice17'
-app.config['MONGO_URI'] = 'mongodb://user:pass@ds149134.mlab.com:49134/hackrice17'
+app.config['MONGO_URI'] = '<in the mlab>'
 
 mongo = PyMongo(app)
 
@@ -57,11 +57,31 @@ def get_all_shelters():
     shelters = mongo.db.shelters
     output = []
     for s in shelters.find():
-        output.append({'sid': str(s['_id']), 'name': s['name'], 'latitude': s['lat'],
+        output.append({'sid': s['_id'], 'name': s['name'], 'latitude': s['lat'],
         'longitude': s['lon'], 'address': s['address'], 'products': s['products']})
     return jsonify({'result': output})
 
-
+# GET: /<name>/productspecs
+# output:
+# {
+#   'result':
+#       {
+#           pid: product id,
+#           name: product name,
+#           cost: product cost,
+#           amz_link: product's amazon link
+#       } <on success>
+#       'INVALID UID' <on failure>
+# }
+@app.route('/<pid>/product_specs')
+def get_product_specs(uid):
+    product = mongo.db.products.find_one({'_id': pid})
+    if product:
+        output = {'pid': product['pid'], 'name': product['name'],
+        'cost': product['cost'], 'amz_link': product['amz_link']}
+    else:
+        output = 'INVALID UID'
+    return jsonify({'result': output})
 
 # people in shelter side
 
@@ -91,7 +111,7 @@ def sign_up():
     name = request.json['name']
     pwd = request.json['pwd']
     sid = mongo.db.shelter.find_one({'name': request.json['shelter_name']})
-    users.insert({'_id': _id, 'email': email, 'name': name, 'pwd': pwd, 'sid': sid})
+    framework.insert({'_id': _id, 'email': email, 'name': name, 'pwd': pwd, 'sid': sid})
     return jsonify({'result': 'SIGN UP SUCCESS'})
 
 # GET: /<name>/userinfo
@@ -128,7 +148,7 @@ def get_all_products():
     products = mongo.db.products
     output = []
     for p in products.find():
-        output.append({'pid': str(p['_id']), 'name': p['name']})
+        output.append({'pid': p['_id'], 'name': p['name']})
     return jsonify({'result': output})
 
 @app.route('/product', methods=['POST'])
