@@ -1,8 +1,7 @@
-# hackrice17
-A HackRice 2017 project
-
 # Shelper
 Donate to or request items for your local shelter with Shelper.
+
+A HackRice 2017 project.
 
 ## Installation
 
