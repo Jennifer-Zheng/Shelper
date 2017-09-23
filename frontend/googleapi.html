@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /*
+       * Add markers
+       * On click show pop up
+       * Button in pop up leading to amazon url
+       *  
+      */
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 10px;
+        padding: 10px;
+      }
+      #map{
+        margin-bottom: 20px;
+      }
+
+      #words {
+        background-color: #F0F8FF; 
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px;
+      }
+      #title{
+        text-align: center;
+        font-size: 30px;
+        font-family: Lobster, Monospace;
+        color: blue;
+      }
+      .list{
+        display: none;
+      }
+      #input {
+          background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+          background-position: 10px 12px; /* Position the search icon */
+          background-repeat: no-repeat; /* Do not repeat the icon image */
+          width: 50%; /* Full-width */
+          font-size: 16px; /* Increase font-size */
+          padding: 12px 20px 12px 40px; /* Add some padding */
+          border: 1px solid #ddd; /* Add a grey border */
+          margin-bottom: 10px; /* Add some space below the input */
+      }
+      #searchButton {
+          border-radius: 4px;
+          background-color: #64B5F6;
+          border: none;
+          color: #FFFFFF;
+          text-align: center;
+          font-size: 16px;
+          padding: 15px;
+          width: 100px;
+          transition: all 0.5s;
+          cursor: pointer;
+          margin: 5px;
+        }
+
+        #searchButton span {
+          cursor: pointer;
+          display: inline-block;
+          position: relative;
+          transition: 0.5s;
+        }
+
+        #searchButton span:after {
+          content: '\00bb';
+          position: absolute;
+          opacity: 0;
+          top: 0;
+          right: -20px;
+          transition: 0.5s;
+        }
+
+        #searchButton:hover span {
+          padding-right: 25px;
+        }
+
+        #searchButton:hover span:after {
+          opacity: 1;
+          right: 0;
+        }
+
+      #myUL {
+          /* Remove default list styling */
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+      }
+
+      #myUL li a {
+          border: 1px solid #ddd; /* Add a border to all links */
+          margin-top: -1px; /* Prevent double borders */
+          background-color: #f6f6f6; /* Grey background color */
+          padding: 12px; /* Add some padding */
+          text-decoration: none; /* Remove default text underline */
+          font-size: 18px; /* Increase the font-size */
+          color: black; /* Add a black text color */
+          display: block; /* Make it into a block element to fill the whole list */
+      }
+
+      #myUL li a:hover:not(.header) {
+          background-color: #eee; /* Add a hover effect to all links, except for headers */
+      }
+
+    </style>
+  </head>
+
+  <body style="background-image: url(https://s3.amazonaws.com/arc-washpost-wordpress-uploads/primetime/wp-content/uploads/sites/10/2017/08/25104530/Harvey_33830-ec564.jpg);">
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
+    <div id="bar">
+      <h1 id="title">
+        <img src="#IMAGEURL#" style="width: 130px;height: 120px">
+      </h1>
+      <input type="text" id="input" placeholder="Search for shelter places..." onkeyup="keyFunction()" onkeypress="showFunction()">
+      <button id = "searchButton"><span>Next</span></button>
+      <ul class="list" id = "myUL">
+        <li><a href="#">Katy</a></li>
+        <li><a href="#">Hermann</a></li>
+        <li><a href="#">Rice</a></li>
+        <li><a href="#">Methodist</a></li>
+        <li><a href="#">TCH</a></li>
+      </ul>
+    </div>
+    <div id="map"></div>
+    <script>
+      var placeName = ["Katy", "Hermann","Rice","Methodist","TCH"];
+      //map 
+      function initMap() {
+        var map;
+        var myLatLng = {lat: 29.716131, lng: -95.388718};
+        var listLatLng = [{lat: 29.8, lng: -95.4}, {lat: 29.5, lng: -95.38},{lat: 29.9, lng: -95.38},{lat: 29.9, lng: -95.18},{lat: 30.0, lng: -95.38}];
+        var listContent = [[["banana", "https://www.amazon.com/NurturMe-Roos-Snacks-Banana-Pineapple/dp/B00PB41WAM/ref=sr_1_1_sspa?s=grocery&ie=UTF8&qid=1506151322&sr=1-1-spons&keywords=banana&psc=1"],["apple","https://www.amazon.com/Bragg-Organic-Apple-Cider-Vinegar/dp/B01EW16TCK/ref=sr_1_1_s_it?s=grocery&ie=UTF8&qid=1506151339&sr=1-1&keywords=apple"]], [["banana", "https://www.amazon.com/NurturMe-Roos-Snacks-Banana-Pineapple/dp/B00PB41WAM/ref=sr_1_1_sspa?s=grocery&ie=UTF8&qid=1506151322&sr=1-1-spons&keywords=banana&psc=1"],["water bottle", "https://www.amazon.com/Camelbak-Products-Bottle-Charcoal-1-Liter/dp/B00EPGMN1E/ref=sr_1_1?ie=UTF8&qid=1506154060&sr=8-1&keywords=water+bottle"]],[["banana", "https://www.amazon.com/NurturMe-Roos-Snacks-Banana-Pineapple/dp/B00PB41WAM/ref=sr_1_1_sspa?s=grocery&ie=UTF8&qid=1506151322&sr=1-1-spons&keywords=banana&psc=1"]],[["juice", "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=juice"], ["water bottle", "https://www.amazon.com/Camelbak-Products-Bottle-Charcoal-1-Liter/dp/B00EPGMN1E/ref=sr_1_1?ie=UTF8&qid=1506154060&sr=8-1&keywords=water+bottle"]],[["juice", "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=juice"]]];
+        var styledMapType = new google.maps.StyledMapType(
+          [
+            {
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#ebe3cd"
+                }
+              ]
+            },
+            {
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#523735"
+                }
+              ]
+            },
+            {
+              "elementType": "labels.text.stroke",
+              "stylers": [
+                {
+                  "color": "#f5f1e6"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative",
+              "stylers": [
+                {
+                  "visibility": "on"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative",
+              "elementType": "geometry.stroke",
+              "stylers": [
+                {
+                  "color": "#c9b2a6"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative.land_parcel",
+              "elementType": "geometry.stroke",
+              "stylers": [
+                {
+                  "color": "#dcd2be"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative.land_parcel",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#ae9e90"
+                }
+              ]
+            },
+            {
+              "featureType": "landscape.natural",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#dfd2ae"
+                }
+              ]
+            },
+            {
+              "featureType": "poi",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "poi",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#dfd2ae"
+                }
+              ]
+            },
+            {
+              "featureType": "poi",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#93817c"
+                }
+              ]
+            },
+            {
+              "featureType": "poi.business",
+              "stylers": [
+                {
+                  "visibility": "on"
+                }
+              ]
+            },
+            {
+              "featureType": "poi.government",
+              "stylers": [
+                {
+                  "visibility": "on"
+                }
+              ]
+            },
+            {
+              "featureType": "poi.medical",
+              "stylers": [
+                {
+                  "visibility": "on"
+                }
+              ]
+            },
+            {
+              "featureType": "poi.park",
+              "elementType": "geometry.fill",
+              "stylers": [
+                {
+                  "color": "#a5b076"
+                }
+              ]
+            },
+            {
+              "featureType": "poi.park",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#447530"
+                }
+              ]
+            },
+            {
+              "featureType": "poi.place_of_worship",
+              "stylers": [
+                {
+                  "visibility": "on"
+                }
+              ]
+            },
+            {
+              "featureType": "road",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "road",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#f5f1e6"
+                }
+              ]
+            },
+            {
+              "featureType": "road",
+              "elementType": "labels.icon",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "road.arterial",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#fdfcf8"
+                }
+              ]
+            },
+            {
+              "featureType": "road.highway",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#f8c967"
+                }
+              ]
+            },
+            {
+              "featureType": "road.highway",
+              "elementType": "geometry.stroke",
+              "stylers": [
+                {
+                  "color": "#e9bc62"
+                }
+              ]
+            },
+            {
+              "featureType": "road.highway.controlled_access",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#e98d58"
+                }
+              ]
+            },
+            {
+              "featureType": "road.highway.controlled_access",
+              "elementType": "geometry.stroke",
+              "stylers": [
+                {
+                  "color": "#db8555"
+                }
+              ]
+            },
+            {
+              "featureType": "road.local",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#806b63"
+                }
+              ]
+            },
+            {
+              "featureType": "transit",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "transit.line",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#dfd2ae"
+                }
+              ]
+            },
+            {
+              "featureType": "transit.line",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#8f7d77"
+                }
+              ]
+            },
+            {
+              "featureType": "transit.line",
+              "elementType": "labels.text.stroke",
+              "stylers": [
+                {
+                  "color": "#ebe3cd"
+                }
+              ]
+            },
+            {
+              "featureType": "transit.station",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#dfd2ae"
+                }
+              ]
+            },
+            {
+              "featureType": "water",
+              "elementType": "geometry.fill",
+              "stylers": [
+                {
+                  "color": "#b9d3c2"
+                }
+              ]
+            },
+            {
+              "featureType": "water",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#92998d"
+                }
+              ]
+            }
+          ],
+          {name: 'Styled Map'}
+          );
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: myLatLng,
+          zoom: 10,
+          mapTypeControlOptions:{
+            mapTypeIds: ['satellite', 'hybrid', 'terrain',
+                    'styled_map']
+          }
+
+          });
+        map.mapTypes.set('styled_map', styledMapType);
+        map.setMapTypeId('styled_map');
+        var infowindow = new google.maps.InfoWindow();
+        var marker, index;
+        var infowindow1 = new google.maps.InfoWindow();
+        for (index = 0; index < listLatLng.length; index ++ ){
+          marker = new google.maps.Marker({
+              position : listLatLng[index],
+              map : map,
+              icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+            });
+          google.maps.event.addListener(marker, 'click', (function(marker, index) {
+            return function() {
+              var content;
+              content = '<div id = "all">' +'<p style = "font-family:arial; font-size: 20px; font-color:blue;">'+ "Items Needed:"+'</p>';
+              for (var i = 0; i < listContent[index].length; i++) {
+                var link = '<div id = "bg">'+ '<Button id = "words" class="mdl-button">'+'<a href=' + listContent[index][i][1] +'>'+ listContent[index][i][0]+'</a> ' +'</Button>' + '</div>';
+                content += link;
+              };
+              content += '</div>'
+              infowindow.setContent(content);
+              infowindow.open(map, marker)
+        }
+      })(marker, index));
+          
+          google.maps.event.addListener(marker, 'mouseover',(function(marker, index){
+            return function () {
+                var pop_up = placeName[index];
+                marker.setIcon('http://maps.google.com/mapfiles/ms/icons/red-dot.png');
+                infowindow1.setContent(pop_up);
+                infowindow1.open(map, marker)
+              }
+            })(marker, index));
+
+          google.maps.event.addListener(marker, 'mouseout',(function(marker, index){
+            return function () {
+                infowindow1.close(map, marker);
+                marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+              }
+            })(marker, index));
+
+
+
+
+          }
+        }
+        //function for search bar for searching filter 
+        function keyFunction() {
+          // Declare variables
+          var input, filter, ul, li, a, i;
+          input = document.getElementById('input');
+          ul = document.getElementById("myUL");
+          li = ul.getElementsByTagName('li');
+          filter = input.value.toUpperCase();
+          // Loop through all list items, and hide those who don't match the search query
+          for (i = 0; i < li.length; i++) {
+              a = li[i].getElementsByTagName("a")[0];
+              if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                  li[i].style.display = "";
+              } else {
+                  li[i].style.display = "none";
+              }
+          }
+      }
+
+      //function for shwoing the whole list
+      function showFunction() {
+          var input, filter, ul, li, a, i;
+          input = document.getElementById('input');
+          ul = document.getElementById("myUL");
+          li = ul.getElementsByTagName('li');
+          filter = input.value.toUpperCase();
+          // Loop through all list items, and hide those who don't match the search query
+          for (i = 0; i < li.length; i++) {
+              a = li[i].getElementsByTagName("a")[0];
+              if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                  li[i].style.display = "";
+              } else {
+                  li[i].style.display = "none";
+              }
+          }
+      }
+
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDqR5o1RZrEgqbKlumY9my5sXeCGe98oA&callback=initMap"
+    async defer></script>
+  </body>
+
+</html>
+
