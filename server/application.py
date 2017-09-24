@@ -46,8 +46,8 @@ mongo = PyMongo(app)
 # {
 #   'result':
 #       [
-#           { sid: shelter id, name: shelter name, lat: latitude,
-#            lon: longitude, address: shelter address, products:
+#           { sid: shelter id, name: shelter name, latitude: latitude,
+#            longitude: longitude, address: shelter address, products:
 #            products in shelter },
 #            ...
 #       ]
