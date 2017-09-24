@@ -72,12 +72,12 @@ shelters = data['shelters']
 
 # fetch product info based on name and returns a Product
 def make_product_using_name(name):
+    name = name.strip(' \t\n\r()')
     # parse the data for a specific need based on keyword 'name'
     url = 'https://api.harveyneeds.org/api/v1/products?need=' + name
     result = requests.get(url)
-    resulting_data = result.json()
+    get_results = result.json()['products']
     # retrieve first result
-    get_results = resulting_data['products']
     if len(get_results) == 0:
         result = db.products.insert_one(
             {
@@ -136,11 +136,14 @@ for s in shelters:
     lat = s['latitude']
     products = s['needs']
 
-    # create a Shelter with shelter info in API
-    shelter = Shelter(-1, name, lat, lon, address)
-    # add all of the needs into shelter's list of products
-    for p in products:
-        add_product_to_shelter(shelter, p)
+    if products is not None and len(products) > 0:
+        # create a Shelter with shelter info in API
+        shelter = Shelter(-1, name, lat, lon, address)
+        # add all of the needs into shelter's list of products
+        for p in products:
+            if not isinstance(p, str) or '(' in p or ')' in p:
+                continue
+            add_product_to_shelter(shelter, p)
 
     # push the Shelter to the database
-    push_shelter_to_db(s)
+    push_shelter_to_db(shelter)
