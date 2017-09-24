@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Shelper</title>
+    <style>
+      #map-canvas {
+        height: 300px;
+        width: 600px;
+        background-color: #CCC;
+        /*-webkit-flex: 1;          
+        -ms-flex: 1;              
+        flex: 1;*/ 
+      }
+    /*  #map-cntnr {
+        position: absolute;
+        display: -webkit-flex;      NEW - Chrome 
+        display: flex;
+
+      }*/
+
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  </head>
+  <body>
+    <!-- Material Design -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" id="map-cntnr">
+    <header class="test mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title">Shelper</span>
+        <div class="mdl-layout-spacer"></div>
+        <nav class="mdl-navigation">
+          <a class="mdl-navigation__link" href="#">Home</a>
+          <a class="mdl-navigation__link" href="#">About</a>
+          <a class="mdl-navigation__link" href="#">Contact</a>
+        </nav>
+        <!-- start search form -->
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+          <label class="mdl-button mdl-js-button mdl-button--icon" for="search-expandable">
+            <i class="material-icons">search</i>
+          </label>
+          <div class="mdl-textfield__expandable-holder">
+            <input class="mdl-textfield__input" type="text" id="search-expandable" />
+            <label class="mdl-textfield__label" for="search-expandable">Search text</label>
+          </div>
+        </div>
+        <!-- end search form -->
+      </div>
+    </header>
+    <div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">Shelper</span>
+      <nav class="mdl-navigation">
+        <a class="mdl-navigation__link" href="#">Products</a>
+        <a class="mdl-navigation__link" href="#">Services</a>
+        <a class="mdl-navigation__link" href="#">Portfolios</a>
+        <a class="mdl-navigation__link" href="#">Achievements</a>
+        <a class="mdl-navigation__link" href="#">Blog</a>
+      </nav>
+    </div>  
+      <div id="map-canvas"></div>
+    </div>
+    <!-- Material Design -->
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDqR5o1RZrEgqbKlumY9my5sXeCGe98oA&callback=initMap"></script>
+    <script>
+      function initialize() {
+          var myLatLng = new google.maps.LatLng(45.4375, 12.3358),
+              myOptions = {
+                  zoom: 5,
+                  center: myLatLng,
+                  mapTypeId: google.maps.MapTypeId.ROADMAP
+              },
+              map = new google.maps.Map(document.getElementById('map-canvas'), myOptions),
+              marker = new google.maps.Marker({
+                  position: myLatLng,
+                  map: map
+              });
+
+          marker.setMap(map);
+          moveMarker(map, marker);
+
+      }
+
+      function moveMarker(map, marker) {
+
+          //delayed so you can see it move
+          setTimeout(function () {
+
+              marker.setPosition(new google.maps.LatLng(45.4375, 12.3358));
+              map.panTo(new google.maps.LatLng(45.4375, 12.3358));
+
+          }, 1500);
+      };
+    </script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDqR5o1RZrEgqbKlumY9my5sXeCGe98oA&callback"></script>-->
+  </body>
+</html>
