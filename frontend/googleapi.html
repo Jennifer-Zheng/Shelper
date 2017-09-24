@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Simple Map</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
@@ -13,7 +13,7 @@
        * Add markers
        * On click show pop up
        * Button in pop up leading to amazon url
-       *  
+       *
       */
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -32,7 +32,7 @@
       }
 
       #words {
-        background-color: #F0F8FF; 
+        background-color: #F0F8FF;
         border: null;
         color: white;
         text-align: center;
@@ -127,13 +127,13 @@
         <img src="../logo.png" style="width: 130px;height: 120px">
       </h1>
       <input type="text" id="input" placeholder="Search for shelter places..." onkeyup="keyFunction()" onkeypress="showFunction()">
-      <button id = "searchButton"><span>Next</span></button>
-    
+      <a href="login.html"><button id = "searchButton"><span>Next</span></button></a>
+
     </div>
     <div id="map"></div>
     <script>
       var placeName = ['George R. Brown', 'Second Baptist Church Jacinto City', 'Phat Giac (Enlightened Buddha) Temple ', 'NRG Center ', 'St. Maximillian Kolbe Catholic Church', 'Saint Maximilian Kolbe Catholic Community', 'Delmar Field Houston', 'Memorial Drive Presbyterian Church', 'Holy Name Catholic Church', 'American Legion Hall', 'Hawa Foundation', 'Community of Faith Church', 'Harbor Light Center For Men', 'MO Campbell Ed. Center', 'Emmanuel Baptist Church Houston', 'Crosby Middle School', 'Third Ward Multi-Service Center', 'The MET Church', 'Sunnyside Multi-Service Center', 'Copperfield Church', 'Northshore Community Fellowship of Faith Church', 'Baytown Revival Center', 'Hoa Hao Buddism Temple', 'First Baptist Church of Jacinto City', 'First Baptist Church - Huffman', 'World Changers Church', 'BBVA Compass Stadium', 'First Baptist Church of Porter', 'Forge for Families', 'Barnett Stadium', 'Butler Stadium', 'Church of the Apostles', 'Amor y Restoracion Iglesia', 'Lifepath Church', 'Humble Civic Center', 'Alief Taylor High School', 'St. Thomas Presbyterian Church', 'Lien Hoa Temple', 'Graceview Baptist Church', 'Phap Luan Temple', 'Lakewood Church', 'Vietnamese Community Center', 'Taylor High School', 'Living Christ Church, Iglesia Cristo Vive'];
-      //map 
+      //map
       function initMap() {
         var map;
         var myLatLng = {lat: 29.716131, lng: -95.388718};
@@ -473,7 +473,7 @@
               infowindow.open(map, marker)
         }
       })(marker, index));
-          
+
           google.maps.event.addListener(marker, 'mouseover',(function(marker, index){
             return function () {
                 var pop_up = placeName[index];
@@ -495,7 +495,7 @@
 
           }
         }
-        //function for search bar for searching filter 
+        //function for search bar for searching filter
         function keyFunction() {
           // Declare variables
           var input, filter, ul, li, a, i;
@@ -543,4 +543,3 @@
   </body>
 
 </html>
-
