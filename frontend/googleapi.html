@@ -33,10 +33,10 @@
 
       #words {
         background-color: #F0F8FF; 
-        border: none;
+        border: null;
         color: white;
         text-align: center;
-        text-decoration: none;
+        text-decoration: null;
         display: inline-block;
         font-size: 20px;
       }
@@ -47,12 +47,9 @@
         color: blue;
       }
       .list{
-        display: none;
+        display: null;
       }
       #input {
-          background-image: url('/css/searchicon.png'); /* Add a search icon to input */
-          background-position: 10px 12px; /* Position the search icon */
-          background-repeat: no-repeat; /* Do not repeat the icon image */
           width: 50%; /* Full-width */
           font-size: 16px; /* Increase font-size */
           padding: 12px 20px 12px 40px; /* Add some padding */
@@ -62,7 +59,7 @@
       #searchButton {
           border-radius: 4px;
           background-color: #64B5F6;
-          border: none;
+          border: null;
           color: #FFFFFF;
           text-align: center;
           font-size: 16px;
@@ -100,7 +97,7 @@
 
       #myUL {
           /* Remove default list styling */
-          list-style-type: none;
+          list-style-type: null;
           padding: 0;
           margin: 0;
       }
@@ -110,7 +107,7 @@
           margin-top: -1px; /* Prevent double borders */
           background-color: #f6f6f6; /* Grey background color */
           padding: 12px; /* Add some padding */
-          text-decoration: none; /* Remove default text underline */
+          text-decoration: null; /* Remove default text underline */
           font-size: 18px; /* Increase the font-size */
           color: black; /* Add a black text color */
           display: block; /* Make it into a block element to fill the whole list */
@@ -127,26 +124,20 @@
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
     <div id="bar">
       <h1 id="title">
-        <img src="#IMAGEURL#" style="width: 130px;height: 120px">
+        <img src="../logo.png" style="width: 130px;height: 120px">
       </h1>
       <input type="text" id="input" placeholder="Search for shelter places..." onkeyup="keyFunction()" onkeypress="showFunction()">
       <button id = "searchButton"><span>Next</span></button>
-      <ul class="list" id = "myUL">
-        <li><a href="#">Katy</a></li>
-        <li><a href="#">Hermann</a></li>
-        <li><a href="#">Rice</a></li>
-        <li><a href="#">Methodist</a></li>
-        <li><a href="#">TCH</a></li>
-      </ul>
+    
     </div>
     <div id="map"></div>
     <script>
-      var placeName = ["Katy", "Hermann","Rice","Methodist","TCH"];
+      var placeName = ['George R. Brown', 'Second Baptist Church Jacinto City', 'Phat Giac (Enlightened Buddha) Temple ', 'NRG Center ', 'St. Maximillian Kolbe Catholic Church', 'Saint Maximilian Kolbe Catholic Community', 'Delmar Field Houston', 'Memorial Drive Presbyterian Church', 'Holy Name Catholic Church', 'American Legion Hall', 'Hawa Foundation', 'Community of Faith Church', 'Harbor Light Center For Men', 'MO Campbell Ed. Center', 'Emmanuel Baptist Church Houston', 'Crosby Middle School', 'Third Ward Multi-Service Center', 'The MET Church', 'Sunnyside Multi-Service Center', 'Copperfield Church', 'Northshore Community Fellowship of Faith Church', 'Baytown Revival Center', 'Hoa Hao Buddism Temple', 'First Baptist Church of Jacinto City', 'First Baptist Church - Huffman', 'World Changers Church', 'BBVA Compass Stadium', 'First Baptist Church of Porter', 'Forge for Families', 'Barnett Stadium', 'Butler Stadium', 'Church of the Apostles', 'Amor y Restoracion Iglesia', 'Lifepath Church', 'Humble Civic Center', 'Alief Taylor High School', 'St. Thomas Presbyterian Church', 'Lien Hoa Temple', 'Graceview Baptist Church', 'Phap Luan Temple', 'Lakewood Church', 'Vietnamese Community Center', 'Taylor High School', 'Living Christ Church, Iglesia Cristo Vive'];
       //map 
       function initMap() {
         var map;
         var myLatLng = {lat: 29.716131, lng: -95.388718};
-        var listLatLng = [{lat: 29.8, lng: -95.4}, {lat: 29.5, lng: -95.38},{lat: 29.9, lng: -95.38},{lat: 29.9, lng: -95.18},{lat: 30.0, lng: -95.38}];
+        var listLatLng = [{lat: 29.7521422, lng: -95.3578364}, {lat: 29.772341, lng: -95.181914}, {lat: 29.669426, lng: -95.657712}, {lat: 29.685072, lng: -95.41109}, {lat: 29.9084028, lng: -95.5692759}, {lat: 29.9084913, lng: -95.5687655}, {lat: 29.805513, lng: -95.456435}, {lat: 29.753446, lng: -95.525388}, {lat: 29.7791986, lng: -95.3563779}, {lat: 29.9019678, lng: -95.0622685}, {lat: 29.7141, lng: -95.548149}, {lat: 29.8429305, lng: -95.4202736}, {lat: 29.7819686, lng: -95.3648901}, {lat: 29.9323905, lng: -95.3599262}, {lat: 29.798759, lng: -95.378277}, {lat: 29.8996637, lng: -95.0656814}, {lat: 29.7282999, lng: -95.3615837}, {lat: 29.9620723, lng: -95.5844569}, {lat: 29.656388, lng: -95.3563454}, {lat: 29.898475, lng: -95.633882}, {lat: null, lng: null}, {lat: 29.804668, lng: -94.979619}, {lat: 29.684111, lng: -95.621262}, {lat: 29.7663956, lng: -95.2399977}, {lat: 30.0391048, lng: -95.0899824}, {lat: 29.893134, lng: -95.63874}, {lat: 29.752332, lng: -95.352294}, {lat: 30.104132, lng: -95.239225}, {lat: 29.704368, lng: -95.367805}, {lat: 29.691598, lng: -95.30665}, {lat: 29.635517, lng: -95.488401}, {lat: null, lng: null}, {lat: 29.79891, lng: -95.51303}, {lat: 29.86494, lng: -95.68026}, {lat: 29.9801386, lng: -95.2587713}, {lat: 29.695043, lng: -95.632903}, {lat: 29.770721, lng: -95.593152}, {lat: 29.705471, lng: -95.634169}, {lat: 30.05021, lng: -95.61204}, {lat: 30.0967245, lng: -95.5263108}, {lat: 29.730219, lng: -95.4349904}, {lat: 29.708594, lng: -95.510166}, {lat: 29.6950432, lng: -95.6329033}, {lat: 29.6893845, lng: -95.6334565}];
         var listContent = [[["banana", "https://www.amazon.com/NurturMe-Roos-Snacks-Banana-Pineapple/dp/B00PB41WAM/ref=sr_1_1_sspa?s=grocery&ie=UTF8&qid=1506151322&sr=1-1-spons&keywords=banana&psc=1"],["apple","https://www.amazon.com/Bragg-Organic-Apple-Cider-Vinegar/dp/B01EW16TCK/ref=sr_1_1_s_it?s=grocery&ie=UTF8&qid=1506151339&sr=1-1&keywords=apple"]], [["banana", "https://www.amazon.com/NurturMe-Roos-Snacks-Banana-Pineapple/dp/B00PB41WAM/ref=sr_1_1_sspa?s=grocery&ie=UTF8&qid=1506151322&sr=1-1-spons&keywords=banana&psc=1"],["water bottle", "https://www.amazon.com/Camelbak-Products-Bottle-Charcoal-1-Liter/dp/B00EPGMN1E/ref=sr_1_1?ie=UTF8&qid=1506154060&sr=8-1&keywords=water+bottle"]],[["banana", "https://www.amazon.com/NurturMe-Roos-Snacks-Banana-Pineapple/dp/B00PB41WAM/ref=sr_1_1_sspa?s=grocery&ie=UTF8&qid=1506151322&sr=1-1-spons&keywords=banana&psc=1"]],[["juice", "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=juice"], ["water bottle", "https://www.amazon.com/Camelbak-Products-Bottle-Charcoal-1-Liter/dp/B00EPGMN1E/ref=sr_1_1?ie=UTF8&qid=1506154060&sr=8-1&keywords=water+bottle"]],[["juice", "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=juice"]]];
         var styledMapType = new google.maps.StyledMapType(
           [
@@ -474,7 +465,7 @@
               var content;
               content = '<div id = "all">' +'<p style = "font-family:arial; font-size: 20px; font-color:blue;">'+ "Items Needed:"+'</p>';
               for (var i = 0; i < listContent[index].length; i++) {
-                var link = '<div id = "bg">'+ '<Button id = "words" class="mdl-button">'+'<a href=' + listContent[index][i][1] +'>'+ listContent[index][i][0]+'</a> ' +'</Button>' + '</div>';
+                var link = '<div id = "bg">'+ '<Button id = "words" class="mdl-button">'+'<a href=' + listContent[index][i][1] +'>'+ listContent[index][i][0]+'</a> ' +'</Button>' +'<text>'+listContent[index][i][2]+'</text>' +'</div>';
                 content += link;
               };
               content += '</div>'
@@ -518,7 +509,7 @@
               if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
                   li[i].style.display = "";
               } else {
-                  li[i].style.display = "none";
+                  li[i].style.display = "null";
               }
           }
       }
@@ -536,7 +527,7 @@
               if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
                   li[i].style.display = "";
               } else {
-                  li[i].style.display = "none";
+                  li[i].style.display = "null";
               }
           }
       }
