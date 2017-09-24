@@ -70,52 +70,6 @@ html, body {
 	transition-duration: .5s;
 
 }
-/**/
-.three {
-	position: fixed;
-	left: 60%;
-	/* this position is like in visible state, coz we animate only transform() when showing third panel */
-	top: 0;
-	bottom:0;
-	background-color: #efefef;
-	width: 40%;
-	overflow: hidden;
-
-	-webkit-transform: translateX(100%);
-	-ms-transform: translateX(100%);
-	transform: translateX(100%);
-	transition-duration: .5s;
-	z-index: 5;
-}
-.three-show {
-	transform: translateX(0%);
-	transition-duration: .3s;
-}
-.three-squeezed {
-	left: 40%;
-	transition-duration: 0.5s;
-}
-.three-overlay {
-	background: rgba(0, 0, 0, .3);
-	color: #fff;
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 100%;
-	opacity: 0;
-	transition-property: opacity;
-	transition-duration: 0;
-	/* close anim */
-	z-index: 6;
-}
-.three-overlay-show {
-	opacity: 1;
-	bottom: 0;
-	transition-duration: .5s;
-	/* open anim */
-}
-
 
 /* Panels content variations - header + top bar + content + buttom bar. Every part can be disabled only by combining all separate classes in right way to avoid blank space */
 
@@ -242,9 +196,7 @@ li.content-list-item.active {
 	.two-overlay {
 		display: none;
 	}
-	.three-overlay {
-		display: none;
-	}
+
 }
 @media only screen and (max-width: 1500px) {}
 @media only screen and (max-width: 1024px) {
@@ -345,14 +297,6 @@ $('#squeeze-one').on('click', function () {
 
 // TWO //
 
-//TRIGGERS IN SECOND PANEL
-$('#two-overlay').on('click', function () {
-	//Return to list, hide everything
-	hideThree();
-});
-$('#text_list').on('click', function () {
-	toggleThree($(this));
-});
 
 function reply_click(click_id) {
 	var idd = click_id;
