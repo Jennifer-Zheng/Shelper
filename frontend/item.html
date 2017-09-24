@@ -269,18 +269,7 @@ li.content-list-item.active {
 		left: 0;
 	}
 
-	.three {
-		left: 20%;
-		width: 80%;
-	}
-	.three-squeezed {
-		left: 10%;
-	}
 
-	.four {
-		left: 20%;
-		width: 80%;
-	}
 }
 	</style>
 	<title></title>
@@ -333,15 +322,7 @@ li.content-list-item.active {
     </div>
 
   </div>
-  <div class="three" id="three">
-    <div class="three-overlay" id="three-overlay"></div>
-
-    <div class="panel-header"><div class="close" hide-three>(X)</div><div class="title">Item details</div></div>
-    <div class="panel-content lr-30 no-top has-bottom-160">
-      Here we can show only contents of list item we clicked on
-      <a id="toggle-four" href="https://www.amazon.com/">https://www.amazon.com/</a>
-    </div>
-
+  
   </div>
 
 </div>
@@ -371,46 +352,6 @@ $('#two-overlay').on('click', function () {
 });
 $('#text_list').on('click', function () {
 	toggleThree($(this));
-});
-
-// THREE //
-
-showThree = function(triggerLi) {
-
-	$(triggerLi).addClass("active"); //Freeze <li> highlight
-	$('#two-overlay').addClass("two-overlay-show"); //Show list overlay
-	$('#three').addClass("three-show"); //Show third panel
-	threeIsShown = true;
-	//$(this).attr('three_target') //For future AJAXing
-}
-hideThree = function() {
-	$('#two').find(".active").removeClass("active"); //Release <li> highlight
-	$('#two-overlay').removeClass("two-overlay-show"); //Hide list overlay
-	$('#three').removeClass("three-show"); //Hide third panel
-	threeIsShown = false;
-}
-toggleThree = function(triggerLi) {
-	if (($(triggerLi).is('.active')) && threeIsShown){
-		//Click on itself again
-		hideThree();
-	} else {
-		//First click or click on another <li> when third is open
-		if (!threeIsShown) {
-			//Third is closed, simply open it
-			showThree(triggerLi);
-		} else {
-			//Other third is opened, close and open target
-			hideThree();
-			setTimeout(function() {showThree(triggerLi);}, 400);
-		}
-	}
-}
-//TRIGGERS IN THIRD PANEL
-
-$('#three-overlay').on('click', function () {
-});
-$('[hide-three]').on('click', function () {
-	hideThree();
 });
 
 function reply_click(click_id) {
