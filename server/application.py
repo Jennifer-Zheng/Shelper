@@ -74,7 +74,7 @@ def get_all_shelters():
 #       'INVALID UID' <on failure>
 # }
 @app.route('/<pid>/product_specs')
-def get_product_specs(uid):
+def get_product_specs(pid):
     product = mongo.db.products.find_one({'_id': pid})
     if product:
         output = {'pid': product['pid'], 'name': product['name'],
