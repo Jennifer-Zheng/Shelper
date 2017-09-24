@@ -405,7 +405,7 @@ html {
    outline: none;
 }
 .material-button{
-	 background: url(#IMAGEURL#);
+	 background: url('../logo.png');
 	 background-size: 100px 100px;
 	 background-repeat: no-repeat;
 }
@@ -427,7 +427,7 @@ html {
 
       <div class="input">
          <label for="pass">Email</label>
-         <input type="password" name="pass" id="pass">
+         <input type="email" name="pass" id="pass">
          <span class="spin"></span>
       </div>
 
@@ -535,6 +535,24 @@ html {
 
       }, 600);
       $("button", this).addClass('active');
+     var username = $("name").val();
+     var email = $("pass").val();
+     var pass = $("key").val();
+
+     $.post("http://127.0.0.1:8080/signup",
+       {
+         "uid" : username,
+         "email" : email,
+         "name" : "UNKNOWN",
+         "pwd": pass,
+         "shelter_name": 'UNKNOWN'
+       },
+       function(data, status) {
+         var json = JSON.parse(data)
+         if (json.result == "SIGN UP SUCCESS") {
+           window.location.replace("item.html");
+         }
+       });
    })
 
    $(".alt-2").click(function() {
