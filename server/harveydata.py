@@ -60,7 +60,7 @@ class Shelter:
        self.products = list()
 
     def add_product(self, product):
-        products.append(product)
+        self.products.append(product)
 
 # fetch product info based on name and returns a Product
 def make_product_using_name(name):
@@ -107,6 +107,7 @@ def add_product_to_shelter(shelter, product):
 # creates a list of dictionary values that map a product to the count requested
 def map_prod_to_count(products_list):
     prod_with_count = []
+    print(products_list)
     for product in products_list:
         prod_to_count = {
             'pid': product.id,
@@ -116,6 +117,7 @@ def map_prod_to_count(products_list):
     return prod_with_count
 
 def push_shelter_to_db(shelter):
+    print(shelter.products)
     result = db.shelters.insert_one(
         {
         'name': shelter.name,
@@ -154,6 +156,7 @@ for s in shelters:
         shelter = Shelter(-1, name, lat, lon, address)
         # add all of the needs into shelter's list of products
         for p in products:
+            name = name.strip(' \t\n\r()*[\\?')
             if not isinstance(p, str) or '(' in p or ')' in p:
                 continue
             add_product_to_shelter(shelter, p)

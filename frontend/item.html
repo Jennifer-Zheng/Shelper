@@ -70,52 +70,6 @@ html, body {
 	transition-duration: .5s;
 
 }
-/**/
-.three {
-	position: fixed;
-	left: 60%;
-	/* this position is like in visible state, coz we animate only transform() when showing third panel */
-	top: 0;
-	bottom:0;
-	background-color: #efefef;
-	width: 40%;
-	overflow: hidden;
-
-	-webkit-transform: translateX(100%);
-	-ms-transform: translateX(100%);
-	transform: translateX(100%);
-	transition-duration: .5s;
-	z-index: 5;
-}
-.three-show {
-	transform: translateX(0%);
-	transition-duration: .3s;
-}
-.three-squeezed {
-	left: 40%;
-	transition-duration: 0.5s;
-}
-.three-overlay {
-	background: rgba(0, 0, 0, .3);
-	color: #fff;
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 100%;
-	opacity: 0;
-	transition-property: opacity;
-	transition-duration: 0;
-	/* close anim */
-	z-index: 6;
-}
-.three-overlay-show {
-	opacity: 1;
-	bottom: 0;
-	transition-duration: .5s;
-	/* open anim */
-}
-
 
 /* Panels content variations - header + top bar + content + buttom bar. Every part can be disabled only by combining all separate classes in right way to avoid blank space */
 
@@ -242,9 +196,7 @@ li.content-list-item.active {
 	.two-overlay {
 		display: none;
 	}
-	.three-overlay {
-		display: none;
-	}
+
 }
 @media only screen and (max-width: 1500px) {}
 @media only screen and (max-width: 1024px) {
@@ -269,18 +221,7 @@ li.content-list-item.active {
 		left: 0;
 	}
 
-	.three {
-		left: 20%;
-		width: 80%;
-	}
-	.three-squeezed {
-		left: 10%;
-	}
 
-	.four {
-		left: 20%;
-		width: 80%;
-	}
 }
 	</style>
 	<title></title>
@@ -300,7 +241,7 @@ li.content-list-item.active {
     <div class="panel-content has-top no-bottom" style="margin-bottom: 20px;width:50%;height: 50%;margin-left: 250px">
     	<input type="text" id="input" placeholder="I need ..." >
       <ul>
-        <li class="content-list-item" toggle-three three_target="1"><text id ="text_list">List item #1</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 120px; height: 30px;border-style: none;text-shadow: currentColor;">Number to Request:</button>
+        <li class="content-list-item" toggle-three three_target="1"><text id ="text_list">toilet paper&nbsp&nbsp</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 120px; height: 30px;border-style: none;text-shadow: currentColor;">Number to Request:</button>
   <button class="action-button shadow animate red" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none;text-shadow: none" id = "1">1</button>
   <button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none" id="Add1" onClick="reply_click(this.id)">&#8593</button>
 	<button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none" id="Minus1" onClick="reply_click_minus(this.id)">&#8595</button>
@@ -308,23 +249,23 @@ li.content-list-item.active {
 
 
 
-        <li class="content-list-item" toggle-three three_target="2"><text id ="text_list">List item #2</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 120px; height: 30px;border-style: none;text-shadow: currentColor;">Number to Request:</button>
+        <li class="content-list-item" toggle-three three_target="2"><text id ="text_list">underwear&nbsp&nbsp&nbsp</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 120px; height: 30px;border-style: none;text-shadow: currentColor;">Number to Request:</button>
   <button class="action-button shadow animate red" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none;text-shadow: none" id = "2">1</button>
   <button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none" id="Add2" onClick="reply_click(this.id)">&#8593</button>
  <button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none" id="Minus2" onClick="reply_click_minus(this.id)">&#8595</button></li>
-        <li class="content-list-item" toggle-three three_target="3"><text id ="text_list">List item #3</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 120px; height: 30px;border-style: none;text-shadow: currentColor;">Number to Request:</button>
+        <li class="content-list-item" toggle-three three_target="3"><text id ="text_list">water bottles</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 120px; height: 30px;border-style: none;text-shadow: currentColor;">Number to Request:</button>
   <button class="action-button shadow animate red" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none;text-shadow: none" id = "3">1</button>
   <button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none" id="Add3" onClick="reply_click(this.id)">&#8593</button>
 	<button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none" id="Minus3" onClick="reply_click_minus(this.id)">&#8595</button></li>
-        <li class="content-list-item" toggle-three three_target="4"><text id ="text_list">List item #4</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 120px; height: 30px;border-style: none;text-shadow: currentColor;">Number to Request:</button>
+        <li class="content-list-item" toggle-three three_target="4"><text id ="text_list">blankets&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 120px; height: 30px;border-style: none;text-shadow: currentColor;">Number to Request:</button>
   <button class="action-button shadow animate red" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none;text-shadow: none" id = "4">1</button>
   <button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none" id="Add4" onClick="reply_click(this.id)">&#8593</button>
 	<button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none" id="Minus4" onClick="reply_click_minus(this.id)">&#8595</button></li>
-        <li class="content-list-item" toggle-three three_target="5"><text id ="text_list">List item #5</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 120px; height: 30px;border-style: none;text-shadow: currentColor;">Number to Request:</button>
+        <li class="content-list-item" toggle-three three_target="5"><text id ="text_list">diapers&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 120px; height: 30px;border-style: none;text-shadow: currentColor;">Number to Request:</button>
   <button class="action-button shadow animate red" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none;text-shadow: none" id = "5">1</button>
   <button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none" id="Add5" onClick="reply_click(this.id)">&#8593</button>
 	<button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none" id="Minus5" onClick="reply_click_minus(this.id)">&#8595</button></li>
-        <li class="content-list-item" toggle-three three_target="6"><text id ="text_list">List item #6</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 120px; height: 30px;border-style: none;text-shadow: currentColor;">Number to Request:</button>
+        <li class="content-list-item" toggle-three three_target="6"><text id ="text_list">paper towels</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 120px; height: 30px;border-style: none;text-shadow: currentColor;">Number to Request:</button>
   <button class="action-button shadow animate red" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none;text-shadow: none" id = "6">1</button>
   <button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none" id="Add6" onClick="reply_click(this.id)">&#8593</button>
 	<button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 20px; height: 30px;border-style: none" id="Minus6" onClick="reply_click_minus(this.id)">&#8595</button></li>
@@ -333,14 +274,6 @@ li.content-list-item.active {
     </div>
 
   </div>
-  <div class="three" id="three">
-    <div class="three-overlay" id="three-overlay"></div>
-
-    <div class="panel-header"><div class="close" hide-three>(X)</div><div class="title">Item details</div></div>
-    <div class="panel-content lr-30 no-top has-bottom-160">
-      Here we can show only contents of list item we clicked on
-      <a id="toggle-four" href="https://www.amazon.com/">https://www.amazon.com/</a>
-    </div>
 
   </div>
 
@@ -364,54 +297,6 @@ $('#squeeze-one').on('click', function () {
 
 // TWO //
 
-//TRIGGERS IN SECOND PANEL
-$('#two-overlay').on('click', function () {
-	//Return to list, hide everything
-	hideThree();
-});
-$('#text_list').on('click', function () {
-	toggleThree($(this));
-});
-
-// THREE //
-
-showThree = function(triggerLi) {
-
-	$(triggerLi).addClass("active"); //Freeze <li> highlight
-	$('#two-overlay').addClass("two-overlay-show"); //Show list overlay
-	$('#three').addClass("three-show"); //Show third panel
-	threeIsShown = true;
-	//$(this).attr('three_target') //For future AJAXing
-}
-hideThree = function() {
-	$('#two').find(".active").removeClass("active"); //Release <li> highlight
-	$('#two-overlay').removeClass("two-overlay-show"); //Hide list overlay
-	$('#three').removeClass("three-show"); //Hide third panel
-	threeIsShown = false;
-}
-toggleThree = function(triggerLi) {
-	if (($(triggerLi).is('.active')) && threeIsShown){
-		//Click on itself again
-		hideThree();
-	} else {
-		//First click or click on another <li> when third is open
-		if (!threeIsShown) {
-			//Third is closed, simply open it
-			showThree(triggerLi);
-		} else {
-			//Other third is opened, close and open target
-			hideThree();
-			setTimeout(function() {showThree(triggerLi);}, 400);
-		}
-	}
-}
-//TRIGGERS IN THIRD PANEL
-
-$('#three-overlay').on('click', function () {
-});
-$('[hide-three]').on('click', function () {
-	hideThree();
-});
 
 function reply_click(click_id) {
 	var idd = click_id;
