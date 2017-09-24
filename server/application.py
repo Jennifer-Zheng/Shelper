@@ -58,7 +58,7 @@ def get_all_shelters():
     output = []
     for s in shelters.find():
         output.append({'sid': str(s['_id']), 'name': s['name'], 'latitude': s['lat'],
-        'longitude': s['lon'], 'address': s['address'], 'products': s['needs']})
+        'longitude': s['lon'], 'address': s['address'], 'products': s['products']})
     return jsonify({'result': output})
 
 # GET: /<name>/productspecs
