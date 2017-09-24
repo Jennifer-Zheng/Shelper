@@ -62,14 +62,6 @@ class Shelter:
     def add_product(self, product):
         products.append(product)
 
-# get Harvey shelter data
-response = requests.get("https://api.harveyneeds.org/api/v1/shelters?county=harris")
-# data in json format
-data = response.json()
-
-# get the list of all of the shelters from the data
-shelters = data['shelters']
-
 # fetch product info based on name and returns a Product
 def make_product_using_name(name):
     name = name.strip(' \t\n\r()')
@@ -128,6 +120,14 @@ def push_shelter_to_db(shelter):
         }
     )
 
+# get Harvey shelter data
+response = requests.get("https://api.harveyneeds.org/api/v1/shelters?county=harris")
+# data in json format
+data = response.json()
+
+# get the list of all of the shelters from the data
+shelters = data['shelters']
+
 # go through and add shelters and their products to database
 for s in shelters:
     name = s['shelter']
@@ -136,7 +136,7 @@ for s in shelters:
     lat = s['latitude']
     products = s['needs']
 
-    if products is not None and len(products) > 0:
+    if not(products is None) and len(products) > 0:
         # create a Shelter with shelter info in API
         shelter = Shelter(-1, name, lat, lon, address)
         # add all of the needs into shelter's list of products
@@ -144,6 +144,7 @@ for s in shelters:
             if not isinstance(p, str) or '(' in p or ')' in p:
                 continue
             add_product_to_shelter(shelter, p)
-
-    # push the Shelter to the database
-    push_shelter_to_db(shelter)
+        # push the Shelter to the database
+        push_shelter_to_db(shelter)
+    else:
+        print(name)
