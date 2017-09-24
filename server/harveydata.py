@@ -64,12 +64,17 @@ class Shelter:
 
 # fetch product info based on name and returns a Product
 def make_product_using_name(name):
-    name = name.strip(' \t\n\r()')
+    name = name.strip(' \t\n\r()*[\\?')
     # parse the data for a specific need based on keyword 'name'
     url = 'https://api.harveyneeds.org/api/v1/products?need=' + name
     result = requests.get(url)
-    get_results = result.json()['products']
-    # retrieve first result
+    try:
+        get_results = result.json()['products']
+    except KeyError:
+        print(name + " " + str(result.json()))
+        exit()
+
+    # if get_results' length is 0, the product was not found
     if len(get_results) == 0:
         result = db.products.insert_one(
             {
@@ -80,6 +85,7 @@ def make_product_using_name(name):
         )
         p = Product(str(result.inserted_id), name, "www.amazon.com", "-$1")
     else:
+        # retrieve first result
         first_result =  get_results[0]
         # insert product to list of products in database and returns an unique id
         result = db.products.insert_one(
@@ -134,8 +140,15 @@ for s in shelters:
     address = s['address']
     lon = s['longitude']
     lat = s['latitude']
-    products = s['needs']
+    products = set()
+    # products is a set of needs and supply needs
+    if s['needs'] is not None:
+        products |= set(s['needs'])
+    if s['supply_needs'] is not None:
+        products |= set(s['supply_needs'])
+    products = list(products)
 
+    # products exists
     if not(products is None) and len(products) > 0:
         # create a Shelter with shelter info in API
         shelter = Shelter(-1, name, lat, lon, address)
@@ -146,5 +159,5 @@ for s in shelters:
             add_product_to_shelter(shelter, p)
         # push the Shelter to the database
         push_shelter_to_db(shelter)
-    else:
-        print(name)
+#    else:
+#        print(name)
