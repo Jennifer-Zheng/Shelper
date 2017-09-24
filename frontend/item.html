@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<style type="text/css">
+		* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: Roboto, sans-serif;
+	font-weight: 400;
+	line-height: 1.5em;
+}
+
+html, body {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	cursor: default;
+}
+.one {
+	position: absolute;
+	background: #1D2127;
+	color: #61C7B3;
+	left: -300px;
+	top: 0;
+	bottom: 0;
+	width: 300px;
+	z-index: 15;
+}
+#one.one-squeezed {
+	width: 100px;
+}
+.two {
+	position: absolute;
+	left: 300px;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	background: #fff;
+	color: #555;
+	z-index: 1;
+}
+#two.one-squeezed {
+	left: 100px;
+}
+.two-overlay {
+	background: rgba(0, 0, 0, .4);
+	color: #fff;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 100%;
+	opacity: 0;
+	transition-property: opacity;
+	transition-duration: 0;
+	/* close anim */
+	z-index: 2;
+}
+.two-overlay-show {
+	opacity: 1;
+	bottom: 0;
+	transition-duration: .5s;
+	/* open anim */
+}
+.one, .two {
+	/* sync squeeze anim speed */
+	transition-duration: .5s;
+
+}
+/**/
+.three {
+	position: fixed;
+	left: 60%;
+	/* this position is like in visible state, coz we animate only transform() when showing third panel */
+	top: 0;
+	bottom:0;
+	background-color: #efefef;
+	width: 40%;
+	overflow: hidden;
+
+	-webkit-transform: translateX(100%);
+	-ms-transform: translateX(100%);
+	transform: translateX(100%);
+	transition-duration: .5s;
+	z-index: 5;
+}
+.three-show {
+	transform: translateX(0%);
+	transition-duration: .3s;
+}
+.three-squeezed {
+	left: 40%;
+	transition-duration: 0.5s;
+}
+.three-overlay {
+	background: rgba(0, 0, 0, .3);
+	color: #fff;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 100%;
+	opacity: 0;
+	transition-property: opacity;
+	transition-duration: 0;
+	/* close anim */
+	z-index: 6;
+}
+.three-overlay-show {
+	opacity: 1;
+	bottom: 0;
+	transition-duration: .5s;
+	/* open anim */
+}
+
+
+/* Panels content variations - header + top bar + content + buttom bar. Every part can be disabled only by combining all separate classes in right way to avoid blank space */
+
+.panel-header {
+	display: block;
+	padding: 50px 40px;
+	border-bottom: 1px solid #EFEFEF;
+	overflow: hidden;
+}
+.panel-header .title {
+	/* Title text of every panel */
+	line-height: 40px;
+	font-size: 40px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.panel-header .close {
+	/* close button for small */
+	float: right;
+	white-space: nowrap;
+	line-height: 40px;
+	cursor: pointer;
+}
+.panel-top-bar {
+	height: 70px;
+	padding: 20px 40px;
+	background: #fff;
+	border-bottom: 2px solid #EFEFEF;
+}
+.panel-content {
+	overflow-y: scroll;
+	overflow-x: none;
+	position: absolute;
+	left: 0;
+	right: 0;
+
+}
+.panel-content.lr-30 {
+	left: 30px;
+	right: 30px;
+}
+.panel-content.has-top {
+	top: 210px;
+}
+.panel-content.no-top {
+	top: 140px;
+}
+.panel-content.has-bottom-240 {
+	bottom: 240px;
+}
+.panel-content.has-bottom-160 {
+	bottom: 160px;
+}
+.panel-content.has-bottom-80 {
+	bottom: 80px;
+	border-bottom: 2px solid #efefef;
+}
+.panel-content.no-bottom {
+	bottom: 0;
+}
+.panel-bottom-bar {
+	position: absolute;
+	height: 200px;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: lime;
+}
+
+/* Actions panel list */
+.panel-top-bar ul {
+	list-style: outside none none;
+}
+.panel-top-bar li {
+	float: left;
+	display: inline-block;
+	text-align: center;
+	margin-right: 10px;
+	border: 2px solid #57636C;
+	color: #57636C;
+	border-radius: 30px;
+	width: 30px;
+	height: 30px;
+	line-height: 27px;
+	cursor: pointer;
+}
+ #input {
+          font-size: 16px; /* Increase font-size */
+          padding: 6px 10px 6px 20px; /* Add some padding */
+          border: 1px solid #ddd; /* Add a grey border */
+          margin-bottom: 10px; /* Add some space below the input */
+          width:100px; 
+          -webkit-transition: width 0.4s ease-in-out;
+          transition:width 0.4s ease-in-out
+      }
+
+ #input:focus{
+ 	width: 100%;
+
+ }
+/* Big lists of main content */
+li.content-list-item {
+	display: block;
+	line-height: 50px;
+	height: 50px;
+	background: #fff;
+	transition: all .2s;
+	padding-left: 20px;
+	box-shadow: 0px 0px 0px #61C7B3 inset;
+}
+li.content-list-item:hover, li.content-list-item.active {
+	background: #efefef;
+	
+}
+li.content-list-item.active {
+	box-shadow: 5px 0px 0px #61C7B3 inset;
+	transition-duration: .1s;
+}
+
+/* */
+
+@media only screen and (min-width: 1499px) {
+	.two-overlay {
+		display: none;
+	}
+	.three-overlay {
+		display: none;
+	}
+}
+@media only screen and (max-width: 1500px) {}
+@media only screen and (max-width: 1024px) {
+	.one {
+		width: 100px;
+	}
+	.one:hover {
+		width: 300px;
+		transition-delay: 1s;
+	}
+	.two {
+		left: 100px;
+	}
+}
+@media only screen and (max-width: 600px) {
+	.one {
+		width: 300px;
+		transform: translateX(-100%);
+	}
+
+	.two {
+		left: 0;
+	}
+
+	.three {
+		left: 20%;
+		width: 80%;
+	}
+	.three-squeezed {
+		left: 10%;
+	}
+
+	.four {
+		left: 20%;
+		width: 80%;
+	}
+}
+	</style>
+	<title></title>
+</head>
+<body style="background-color: blue">
+	<div>
+	<div class="one" id="one">
+  <h1>Menu<button id="squeeze-one" href="#"></button></h1>
+
+    </div>
+  <div class="two" id="two" >
+    
+    <div class="two-overlay" id="two-overlay"></div>
+    
+		<div class="panel-header" style="width: 80%"><div class="title" style="background-color: #E0E0E0;width: 100%;text-align: center">Items list</div></div>
+
+    <div class="panel-content has-top no-bottom" style="margin-bottom: 20px;width:50%;height: 50%;margin-left: 250px">
+    	<input type="text" id="input" placeholder="I need ..." >
+      <ul>
+        <li class="content-list-item" toggle-three three_target="1"><text id ="text_list">List item #1</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 100px; height: 30px;border-style: none;text-shadow: currentColor;">Current Requests:</button>
+  <button class="action-button shadow animate red" style="background-color: #F0FFFF;width: 50px; height: 30px;border-style: none;text-shadow: none" id = "1">10</button>
+  <button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 50px; height: 30px;border-style: none" id="Add1" onClick="reply_click(this.id)">Add</button></li>
+
+
+
+        <li class="content-list-item" toggle-three three_target="2"><text id ="text_list">List item #2</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 100px; height: 30px;border-style: none;text-shadow: currentColor;">Current Requests:</button>
+  <button class="action-button shadow animate red" style="background-color: #F0FFFF;width: 50px; height: 30px;border-style: none;text-shadow: none" id = "2">10</button>
+  <button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 50px; height: 30px;border-style: none" id="Add2" onClick="reply_click(this.id)">Add</button></li>
+        <li class="content-list-item" toggle-three three_target="3"><text id ="text_list">List item #3</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 100px; height: 30px;border-style: none;text-shadow: currentColor;">Current Requests:</button>
+  <button class="action-button shadow animate red" style="background-color: #F0FFFF;width: 50px; height: 30px;border-style: none;text-shadow: none" id = "3">10</button>
+  <button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 50px; height: 30px;border-style: none" id="Add3" onClick="reply_click(this.id)">Add</button></li>
+        <li class="content-list-item" toggle-three three_target="4"><text id ="text_list">List item #4</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 100px; height: 30px;border-style: none;text-shadow: currentColor;">Current Requests:</button>
+  <button class="action-button shadow animate red" style="background-color: #F0FFFF;width: 50px; height: 30px;border-style: none;text-shadow: none" id = "4">10</button>
+  <button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 50px; height: 30px;border-style: none" id="Add4" onClick="reply_click(this.id)">Add</button></li>
+        <li class="content-list-item" toggle-three three_target="5"><text id ="text_list">List item #5</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 100px; height: 30px;border-style: none;text-shadow: currentColor;">Current Requests:</button>
+  <button class="action-button shadow animate red" style="background-color: #F0FFFF;width: 50px; height: 30px;border-style: none;text-shadow: none" id = "5">10</button>
+  <button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 50px; height: 30px;border-style: none" id="Add5" onClick="reply_click(this.id)">Add</button></li>
+        <li class="content-list-item" toggle-three three_target="6"><text id ="text_list">List item #6</text><button style="margin-left: 110px;background-color: #F0FFFF;width: 100px; height: 30px;border-style: none;text-shadow: currentColor;">Current Requests:</button>
+  <button class="action-button shadow animate red" style="background-color: #F0FFFF;width: 50px; height: 30px;border-style: none;text-shadow: none" id = "6">10</button>
+  <button class="action-button shadow animate green" style="background-color: #F0FFFF;width: 50px; height: 30px;border-style: none" id="Add6" onClick="reply_click(this.id)">Add</button></li>
+      </ul>
+      <button style="margin-left: 300px; margin-top: 20px;width: 60px;height: 40px;border-style: solid;background-color: #F0FFFE"><span style="background-color: #F0FFFF">Finish</span></button>
+    </div>
+    
+  </div>
+  <div class="three" id="three">
+    <div class="three-overlay" id="three-overlay"></div>
+    
+    <div class="panel-header"><div class="close" hide-three>(X)</div><div class="title">Item details</div></div>
+    <div class="panel-content lr-30 no-top has-bottom-160">
+      Here we can show only contents of list item we clicked on
+      <a id="toggle-four" href="https://www.amazon.com/">https://www.amazon.com/</a>
+    </div>
+ 
+  </div>
+
+</div>
+
+  <script type="text/javascript">
+  	var threeIsShown 	= false;
+var fourIsShown 	= false;
+var countList = [10,10,10,10,10,10];
+
+// ONE //
+
+squeezeOne = function() {
+	$('#one').toggleClass("one-squeezed");
+	$('#two').toggleClass("one-squeezed");
+}
+//TRIGGERS IN FIRST PANEL
+$('#squeeze-one').on('click', function () {
+	squeezeOne()
+});
+
+// TWO //
+
+//TRIGGERS IN SECOND PANEL
+$('#two-overlay').on('click', function () {
+	//Return to list, hide everything
+	hideThree();
+});
+$('#text_list').on('click', function () {
+	toggleThree($(this));
+});
+
+// THREE //
+
+showThree = function(triggerLi) {
+
+	$(triggerLi).addClass("active"); //Freeze <li> highlight
+	$('#two-overlay').addClass("two-overlay-show"); //Show list overlay
+	$('#three').addClass("three-show"); //Show third panel
+	threeIsShown = true;
+	//$(this).attr('three_target') //For future AJAXing
+}
+hideThree = function() {
+	$('#two').find(".active").removeClass("active"); //Release <li> highlight
+	$('#two-overlay').removeClass("two-overlay-show"); //Hide list overlay
+	$('#three').removeClass("three-show"); //Hide third panel
+	threeIsShown = false;
+}
+toggleThree = function(triggerLi) {
+	if (($(triggerLi).is('.active')) && threeIsShown){
+		//Click on itself again
+		hideThree();
+	} else {
+		//First click or click on another <li> when third is open
+		if (!threeIsShown) {
+			//Third is closed, simply open it
+			showThree(triggerLi);
+		} else { 
+			//Other third is opened, close and open target
+			hideThree();
+			setTimeout(function() {showThree(triggerLi);}, 400);
+		}
+	}
+}
+//TRIGGERS IN THIRD PANEL
+
+$('#three-overlay').on('click', function () {
+});
+$('[hide-three]').on('click', function () {
+	hideThree();
+});
+
+function reply_click(click_id) {
+	var idd = click_id;
+	var index = idd[3];
+	countList[parseInt(index)]++;
+	$("#"+index).text(countList[parseInt(index)]);
+}
+
+
+
+
+    
+
+
+  </script>
+
+</body>
+</html>
